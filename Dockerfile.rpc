@@ -1,0 +1,9 @@
+FROM stellar/stellar-rpc:stable
+
+COPY config/soroban-rpc-testnet-config.toml /config/soroban-rpc-testnet-config.toml
+COPY config/soroban-rpc-pubnet-config.toml /config/soroban-rpc-pubnet-config.toml
+COPY config/stellar-core_pubnet.cfg /config/stellar-core_pubnet.cfg
+COPY config/stellar-core_testnet.cfg /config/stellar-core_testnet.cfg
+COPY config/soroban_rpc_startup.sh /config/soroban_rpc_startup.sh
+
+ENTRYPOINT ["/bin/bash", "/config/soroban_rpc_startup.sh"]

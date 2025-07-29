@@ -1,0 +1,47 @@
+{
+  "$schema": "https://app.flightcontrol.dev/schema.json",
+  "environments": [
+    {
+      "id": "development",
+      "name": "Development",
+      "region": "us-east-1",
+      "source": {
+        "branch": "main"
+      },
+      "services": [
+        {
+          "id": "wallet-backend",
+          "name": "Wallets Backend API",
+          "type": "web",
+          "buildType": "docker",
+          "dockerfilePath": "Dockerfile",
+          "dockerContext": ".",
+          "injectEnvVariablesInDockerfile": true,
+          "target": {
+            "type": "ecs-ec2",
+            "clusterInstanceSize": "t3.medium",
+            "clusterMinInstances": 1,
+            "clusterMaxInstances": 1
+          },
+          "cpu": 1,
+          "memory": 1,
+          "minInstances": 2,
+          "maxInstances": 2,
+          "port": 8001,
+          "containerInsights": true,
+          "healthCheckPath": "/health",
+          "healthCheckGracePeriodSecs": 20
+        },
+        {
+          "id": "postgres",
+          "name": "Postgres Database",
+          "type": "rds",
+          "instanceSize": "db.t3.small",
+          "engine": "postgres",
+          "storage": 100,
+          "engineVersion": "14"
+        }
+      ]
+    }
+  ]
+}
