@@ -41,7 +41,8 @@
           "storage": 100,
           "engineVersion": "14",
           "encryptionAtRest": true,
-          "private": true
+          "private": true,
+          "applyChangesImmediately": true
         }
       ]
     },
@@ -85,7 +86,8 @@
           "storage": 100,
           "engineVersion": "14",
           "encryptionAtRest": true,
-          "private": true
+          "private": true,
+          "applyChangesImmediately": true
         }
       ]
     }
