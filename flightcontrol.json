@@ -39,7 +39,9 @@
           "instanceSize": "db.t3.small",
           "engine": "postgres",
           "storage": 100,
-          "engineVersion": "14"
+          "engineVersion": "14",
+          "encryptionAtRest": true,
+          "private": true
         }
       ]
     },
@@ -81,7 +83,9 @@
           "instanceSize": "db.t3.small",
           "engine": "postgres",
           "storage": 100,
-          "engineVersion": "14"
+          "engineVersion": "14",
+          "encryptionAtRest": true,
+          "private": true
         }
       ]
     }
