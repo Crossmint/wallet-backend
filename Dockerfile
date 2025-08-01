@@ -29,4 +29,4 @@ COPY --from=api-build /bin/wallet-backend /app/
 
 EXPOSE 8001
 WORKDIR /app
-ENTRYPOINT ["/bin/bash", "-c", "/app/wallet-backend migrate up && /app/wallet-backend channel-account ensure 2 && /app/wallet-backend serve"]
+ENTRYPOINT ["/bin/bash", "-c", "/app/wallet-backend migrate up && /app/wallet-backend channel-account ensure ${NUMBER_CHANNEL_ACCOUNTS:-15} && /app/wallet-backend serve"]

@@ -21,7 +21,7 @@ services:
     container_name: stellar-rpc
     image: stellar/stellar-rpc:stable
     healthcheck:
-      test: "curl --location 'http://localhost:8000/' -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"id\":8675309,\"method\":\"getHealth\"}' | grep -q '\"status\":\"healthy\"'"
+      test: 'curl --location ''http://localhost:8000/'' -H ''Content-Type: application/json'' -d ''{"jsonrpc":"2.0","id":8675309,"method":"getHealth"}'' | grep -q ''"status":"healthy"'''
       interval: 10s
       timeout: 10s
       retries: 40
@@ -38,7 +38,7 @@ services:
     container_name: api
     image: stellar/wallet-backend:development
     healthcheck:
-      test: "curl --fail --silent --show-error --location 'http://localhost:8001/health' | grep -q '\"status\": \"pass\"'"
+      test: 'curl --fail --silent --show-error --location ''http://localhost:8001/health'' | grep -q ''"status": "pass"'''
       interval: 10s
       timeout: 10s
       retries: 3
@@ -69,7 +69,7 @@ services:
       CLIENT_AUTH_PUBLIC_KEYS: ${CLIENT_AUTH_PUBLIC_KEYS}
       DISTRIBUTION_ACCOUNT_PUBLIC_KEY: ${DISTRIBUTION_ACCOUNT_PUBLIC_KEY}
       DISTRIBUTION_ACCOUNT_SIGNATURE_PROVIDER: ${DISTRIBUTION_ACCOUNT_SIGNATURE_PROVIDER}
-      NUMBER_CHANNEL_ACCOUNTS: ${NUMBER_CHANNEL_ACCOUNTS:-2}
+      NUMBER_CHANNEL_ACCOUNTS: ${NUMBER_CHANNEL_ACCOUNTS:-15}
 
       # Env Signature Client
       DISTRIBUTION_ACCOUNT_PRIVATE_KEY: ${DISTRIBUTION_ACCOUNT_PRIVATE_KEY}
