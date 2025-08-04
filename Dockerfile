@@ -26,6 +26,7 @@ RUN apt-get update && \
     echo "deb https://apt.stellar.org jammy unstable" >/etc/apt/sources.list.d/SDF-unstable.list
 
 COPY --from=api-build /bin/wallet-backend /app/
+ENV DATABASE_URL="${DATABASE_URL}"
 
 EXPOSE 8001
 WORKDIR /app
