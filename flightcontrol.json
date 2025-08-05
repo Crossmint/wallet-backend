@@ -30,7 +30,16 @@
           "port": 8001,
           "containerInsights": true,
           "healthCheckPath": "/health",
-          "healthCheckGracePeriodSecs": 20
+          "healthCheckGracePeriodSecs": 20,
+          "envVariables": {
+            "DATABASE_URL": {
+              "fromService": {
+                "id": "postgres-encrypted",
+                "value": "dbConnectionString"
+              }
+            }
+          },
+          "dependsOn": ["postgres-encrypted"]
         },
         {
           "id": "postgres-encrypted",
@@ -75,7 +84,16 @@
           "port": 8001,
           "containerInsights": true,
           "healthCheckPath": "/health",
-          "healthCheckGracePeriodSecs": 20
+          "healthCheckGracePeriodSecs": 20,
+          "envVariables": {
+            "DATABASE_URL": {
+              "fromService": {
+                "id": "postgres-encrypted",
+                "value": "dbConnectionString"
+              }
+            }
+          },
+          "dependsOn": ["postgres-encrypted"]
         },
         {
           "id": "postgres-encrypted",

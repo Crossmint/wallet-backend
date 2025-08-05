@@ -26,8 +26,11 @@ RUN apt-get update && \
     echo "deb https://apt.stellar.org jammy unstable" >/etc/apt/sources.list.d/SDF-unstable.list
 
 COPY --from=api-build /bin/wallet-backend /app/
+COPY scripts/startup.sh /app/startup.sh
+RUN chmod +x /app/startup.sh
+
 ENV DATABASE_URL="${DATABASE_URL}"
 
 EXPOSE 8001
 WORKDIR /app
-ENTRYPOINT ["/bin/bash", "-c", "/app/wallet-backend migrate up && /app/wallet-backend channel-account ensure ${NUMBER_CHANNEL_ACCOUNTS:-15} && /app/wallet-backend serve"]
+ENTRYPOINT ["/app/startup.sh"]
