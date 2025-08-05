@@ -22,7 +22,7 @@ wait_for_db() {
         echo -e "${YELLOW}Attempt $attempt/$max_attempts: Testing database connection...${NC}"
         
         # Try to connect to the database using a simple query
-        if /app/wallet-backend migrate up --database-url="$DATABASE_URL" 2>/dev/null; then
+        if /app/wallet-backend migrate up --database-url="$DATABASE_URL"; then
             echo -e "${GREEN}✅ Database connection successful!${NC}"
             return 0
         else
