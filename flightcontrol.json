@@ -16,8 +16,8 @@
           "buildType": "docker",
           "dockerfilePath": "Dockerfile",
           "dockerContext": ".",
-          "injectEnvVariablesInDockerfile": true,
-          "includeEnvVariablesInBuild": true,
+          "injectEnvVariablesInDockerfile": false,
+          "includeEnvVariablesInBuild": false,
           "target": {
             "type": "ecs-ec2",
             "clusterInstanceSize": "t3.medium",

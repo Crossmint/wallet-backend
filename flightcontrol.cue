@@ -1,6 +1,41 @@
 package flightcontrol
 
-"$schema": "https://app.flightcontrol.dev/schema.json"
+// Schema annotation per Flightcontrol guide
+#Flightcontrol: {
+  @jsonschema(schema="https://app.flightcontrol.dev/schema.json")
+}
+// Bind the schema to the exported root; place environments here per guide
+#Flightcontrol: {
+  environments: [
+    // Development mirrors the current JSON config
+    ({
+      id:   "development"
+      name: "Development"
+    } & #BaseEnv),
+
+    // Staging: example overrides (adjust as needed)
+    // ({
+    //   id:   "staging"
+    //   name: "Staging"
+    //   // Example: scale app a bit more in staging
+    //   services: [
+    //     (#WebServiceDefaults & { minInstances: 1, maxInstances: 2 }),
+    //     #RDSDefaults,
+    //   ]
+    // } & #BaseEnv),
+
+    // Production: example overrides (adjust as needed)
+    // ({
+    //   id:   "production"
+    //   name: "Production"
+    //   // Example: larger cluster and more app instances
+    //   services: [
+    //     (#WebServiceDefaults & { minInstances: 2, maxInstances: 4 }),
+    //     (#RDSDefaults & { instanceSize: "db.t3.medium", storage: 50 }),
+    //   ]
+    // } & #BaseEnv),
+  ]
+}
 
 #WebServiceDefaults: {
   id:                               "wallet-backend"
@@ -9,8 +44,8 @@ package flightcontrol
   buildType:                        "docker"
   dockerfilePath:                   "Dockerfile"
   dockerContext:                    "."
-  injectEnvVariablesInDockerfile:   true
-  includeEnvVariablesInBuild:       true
+  injectEnvVariablesInDockerfile:   false
+  includeEnvVariablesInBuild:       false
   target: {
     type:                 "ecs-ec2"
     clusterInstanceSize:  "t3.medium"
@@ -57,33 +92,5 @@ package flightcontrol
   services: [#WebServiceDefaults, #RDSDefaults]
 }
 
-environments: [
-  // Development mirrors the current JSON config
-  ({
-    id:   "development"
-    name: "Development"
-  } & #BaseEnv),
-
-  // Staging: example overrides (adjust as needed)
-  // ({
-  //   id:   "staging"
-  //   name: "Staging"
-  //   // Example: scale app a bit more in staging
-  //   services: [
-  //     (#WebServiceDefaults & { minInstances: 1, maxInstances: 2 }),
-  //     #RDSDefaults,
-  //   ]
-  // } & #BaseEnv),
-
-  // Production: example overrides (adjust as needed)
-  // ({
-  //   id:   "production"
-  //   name: "Production"
-  //   // Example: larger cluster and more app instances
-  //   services: [
-  //     (#WebServiceDefaults & { minInstances: 2, maxInstances: 4 }),
-  //     (#RDSDefaults & { instanceSize: "db.t3.medium", storage: 50 }),
-  //   ]
-  // } & #BaseEnv),
-]
+// no exported environments at top-level; use #Flightcontrol instead
 
