@@ -1,11 +1,5 @@
-// Exported root value. This is what gets rendered to JSON.
-{
-  @jsonschema(schema="https://app.flightcontrol.dev/schema.json")
-} & #Flightcontrol
-
-// Definition holding the actual config; unified into the root above
-#Flightcontrol: {
-  environments: [
+// Root config for Flightcontrol UI
+environments: [
     // Development mirrors the current JSON config
     ({
       id:   "development"
@@ -33,8 +27,7 @@
     //     (#RDSDefaults & { instanceSize: "db.t3.medium", storage: 50 }),
     //   ]
     // } & #BaseEnv),
-  ]
-}
+]
 
 #WebServiceDefaults: {
   id:                               "wallet-backend"
@@ -84,6 +77,8 @@
 }
 
 #BaseEnv: {
+  id:   string
+  name: string
   region: "us-east-1"
   source: {
     branch: "main"
