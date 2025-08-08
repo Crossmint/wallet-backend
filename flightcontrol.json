@@ -2,60 +2,6 @@
   "$schema": "https://app.flightcontrol.dev/schema.json",
   "environments": [
     {
-      "id": "staging",
-      "name": "Staging",
-      "region": "us-east-1",
-      "source": {
-        "branch": "main"
-      },
-      "services": [
-        {
-          "id": "wallet-backend",
-          "name": "Wallets Backend API",
-          "type": "web",
-          "buildType": "docker",
-          "dockerfilePath": "Dockerfile",
-          "dockerContext": ".",
-          "injectEnvVariablesInDockerfile": true,
-          "target": {
-            "type": "ecs-ec2",
-            "clusterInstanceSize": "t3.medium",
-            "clusterMinInstances": 1,
-            "clusterMaxInstances": 2
-          },
-          "cpu": 0.75,
-          "memory": 0.75,
-          "minInstances": 1,
-          "maxInstances": 1,
-          "port": 8001,
-          "containerInsights": true,
-          "healthCheckPath": "/health",
-          "healthCheckGracePeriodSecs": 20,
-          "envVariables": {
-            "DATABASE_URL": {
-              "fromService": {
-                "id": "postgres-encrypted",
-                "value": "dbConnectionString"
-              }
-            }
-          },
-          "dependsOn": ["postgres-encrypted"]
-        },
-        {
-          "id": "postgres-encrypted",
-          "name": "Postgres Database",
-          "type": "rds",
-          "instanceSize": "db.t3.small",
-          "engine": "postgres",
-          "storage": 20,
-          "engineVersion": "14",
-          "encryptionAtRest": true,
-          "private": true,
-          "applyChangesImmediately": true
-        }
-      ]
-    },
-    {
       "id": "development",
       "name": "Development",
       "region": "us-east-1",
