@@ -1,8 +1,9 @@
-// Schema annotation per Flightcontrol guide
-#Flightcontrol: {
+// Exported root value. This is what gets rendered to JSON.
+{
   @jsonschema(schema="https://app.flightcontrol.dev/schema.json")
-}
-// Bind the schema to the exported root; place environments here per guide
+} & #Flightcontrol
+
+// Definition holding the actual config; unified into the root above
 #Flightcontrol: {
   environments: [
     // Development mirrors the current JSON config
