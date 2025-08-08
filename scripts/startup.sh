@@ -10,6 +10,20 @@ NC='\033[0m' # No Color
 
 echo -e "${GREEN}🚀 Starting wallet-backend startup process...${NC}"
 
+# Validate required env vars
+if [ -z "${DATABASE_URL:-}" ]; then
+  echo -e "${RED}❌ DATABASE_URL is not set. Ensure Flightcontrol sets it from the RDS service (fromService.value=dbConnectionString).${NC}"
+  env | grep -E "^(FC_|PORT=|DB_|DATABASE_)" || true
+  exit 1
+fi
+
+# Minimal redaction of database URL for diagnostics
+MASKED_DB_URL=$(echo "$DATABASE_URL" | sed -E 's#://[^@]*@#://****@#')
+echo -e "${YELLOW}Using DATABASE_URL=${MASKED_DB_URL}${NC}"
+if [ -n "${DB_HOST:-}" ]; then
+  echo -e "${YELLOW}DB_HOST=${DB_HOST}${NC}"
+fi
+
 # Function to wait for database connection
 wait_for_db() {
     local max_attempts=30
@@ -51,7 +65,7 @@ run_migrations() {
     while [ $attempt -le $max_attempts ]; do
         echo -e "${YELLOW}Migration attempt $attempt/$max_attempts${NC}"
         
-        if /app/wallet-backend migrate up; then
+        if /app/wallet-backend migrate up --database-url="$DATABASE_URL"; then
             echo -e "${GREEN}✅ Migrations completed successfully!${NC}"
             return 0
         else
@@ -76,7 +90,7 @@ ensure_channel_accounts() {
     while [ $attempt -le $max_attempts ]; do
         echo -e "${YELLOW}Channel account attempt $attempt/$max_attempts${NC}"
         
-        if /app/wallet-backend channel-account ensure $num_accounts; then
+        if /app/wallet-backend channel-account ensure $num_accounts --database-url="$DATABASE_URL"; then
             echo -e "${GREEN}✅ Channel accounts ensured successfully!${NC}"
             return 0
         else
@@ -104,4 +118,4 @@ ensure_channel_accounts
 
 # Step 4: Start the server
 echo -e "${GREEN}🌐 Starting wallet-backend server...${NC}"
-exec /app/wallet-backend serve
+exec /app/wallet-backend serve --database-url="$DATABASE_URL"
