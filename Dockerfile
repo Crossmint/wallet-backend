@@ -1,5 +1,5 @@
 # Step 1: Build Go API
-FROM golang:1.24.5-bullseye@sha256:62ba6b19de03e891f7fa1001326bd48411f2626ff35e7ba5b9d890711ce581d9 AS api-build
+FROM golang:1.24.5-bullseye AS api-build
 ARG GIT_COMMIT
 
 WORKDIR /src/wallet-backend
@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y bash
 
 
 # Step 2: Install Stellar Core and copy over app binary
-FROM ubuntu:jammy@sha256:5e41972c0cdee05640f3ed85ad5e7dca92c5a589ced43badaf14d81466f891ae AS core-build
+FROM ubuntu:jammy AS core-build
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ca-certificates curl wget gnupg apt-utils gpg && \
