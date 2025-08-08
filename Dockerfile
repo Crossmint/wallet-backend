@@ -29,8 +29,6 @@ COPY --from=api-build /bin/wallet-backend /app/
 COPY scripts/startup.sh /app/startup.sh
 RUN chmod +x /app/startup.sh
 
-ENV DATABASE_URL="${DATABASE_URL}"
-
 EXPOSE 8001
 WORKDIR /app
 ENTRYPOINT ["/app/startup.sh"]
