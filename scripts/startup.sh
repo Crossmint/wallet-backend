@@ -24,37 +24,6 @@ if [ -n "${DB_HOST:-}" ]; then
   echo -e "${YELLOW}DB_HOST=${DB_HOST}${NC}"
 fi
 
-# Function to wait for database connection
-wait_for_db() {
-    local max_attempts=30
-    local attempt=1
-    local wait_time=5
-
-    echo -e "${YELLOW}📦 Waiting for database connection...${NC}"
-    
-    while [ $attempt -le $max_attempts ]; do
-        echo -e "${YELLOW}Attempt $attempt/$max_attempts: Testing database connection...${NC}"
-        
-        # Try to connect to the database using a simple query
-        if /app/wallet-backend migrate up --database-url="$DATABASE_URL"; then
-            echo -e "${GREEN}✅ Database connection successful!${NC}"
-            return 0
-        else
-            echo -e "${RED}❌ Database connection failed. Waiting ${wait_time}s before retry...${NC}"
-            sleep $wait_time
-            attempt=$((attempt + 1))
-            
-            # Exponential backoff (max 30s)
-            if [ $wait_time -lt 30 ]; then
-                wait_time=$((wait_time + 2))
-            fi
-        fi
-    done
-    
-    echo -e "${RED}💥 Failed to connect to database after $max_attempts attempts${NC}"
-    exit 1
-}
-
 # Function to run migrations with retry
 run_migrations() {
     local max_attempts=5
@@ -107,15 +76,12 @@ ensure_channel_accounts() {
 # Main startup sequence
 echo -e "${GREEN}📋 Starting startup sequence...${NC}"
 
-# Step 1: Wait for database
-wait_for_db
-
-# Step 2: Run migrations
+# Step 1: Run migrations
 run_migrations
 
-# Step 3: Ensure channel accounts
+# Step 2: Ensure channel accounts
 ensure_channel_accounts
 
-# Step 4: Start the server
+# Step 3: Start the server
 echo -e "${GREEN}🌐 Starting wallet-backend server...${NC}"
 exec /app/wallet-backend serve --database-url="$DATABASE_URL"
