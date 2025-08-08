@@ -52,7 +52,7 @@
           "engineVersion": "14",
           "encryptionAtRest": true,
           "private": true,
-          "applyChangesImmediately": true
+          "applyChangesImmediately": false
         }
       ]
     }
