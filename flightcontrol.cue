@@ -7,16 +7,10 @@ environments: [
       name: "Development"
     } & #BaseEnv),
 
-    // Staging: example overrides (adjust as needed)
-    // ({
-    //   id:   "staging"
-    //   name: "Staging"
-    //   // Example: scale app a bit more in staging
-    //   services: [
-    //     (#WebServiceDefaults & { minInstances: 1, maxInstances: 2 }),
-    //     #RDSDefaults,
-    //   ]
-    // } & #BaseEnv),
+    ({
+      id:   "staging"
+      name: "Staging"
+    } & #BaseEnv),
 
     // Production: example overrides (adjust as needed)
     // ({
