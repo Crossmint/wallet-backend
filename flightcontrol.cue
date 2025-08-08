@@ -1,4 +1,5 @@
 // Root config for Flightcontrol UI
+"$schema": "https://app.flightcontrol.dev/schema.json"
 environments: [
     // Development mirrors the current JSON config
     ({
