@@ -9,8 +9,8 @@ package flightcontrol
   buildType:                        "docker"
   dockerfilePath:                   "Dockerfile"
   dockerContext:                    "."
-  injectEnvVariablesInDockerfile:   false
-  includeEnvVariablesInBuild:       false
+  injectEnvVariablesInDockerfile:   true
+  includeEnvVariablesInBuild:       true
   target: {
     type:                 "ecs-ec2"
     clusterInstanceSize:  "t3.medium"
