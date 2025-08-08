@@ -1,5 +1,3 @@
-package flightcontrol
-
 // Schema annotation per Flightcontrol guide
 #Flightcontrol: {
   @jsonschema(schema="https://app.flightcontrol.dev/schema.json")
